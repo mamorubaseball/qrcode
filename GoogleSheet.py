@@ -20,12 +20,19 @@ class Google_API():
         self.attend_sheeet = self.gc.open_by_key(self.SPREADSHEET_KEY).worksheet('出席者リスト')
 
     def add(self,user_id):
-        if self.attend_sheeet.find(user_id):
+        user_row = int(user_id)+1
+        is_attend = self.meibo_sheet.cell(user_row,3).value
+        if is_attend == '出席':
             pass
         else:
-            row_lists  = self.meibo_sheet.row_values(int(user_id)+1)
-            name = row_lists[1]
-            self.attend_sheeet.append_row([user_id,name])
+            self.meibo_sheet.update_cell(user_row, 3, '出席')
+
+        # if self.attend_sheeet.find(user_id):
+        #     pass
+        # else:
+        #     row_lists  = self.meibo_sheet.row_values(int(user_id)+1)
+        #     name = row_lists[1]
+        #     self.attend_sheeet.append_row([user_id,name])
 
 
         
